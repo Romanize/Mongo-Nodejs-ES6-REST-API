@@ -1,3 +1,2 @@
 # Avoid node files
 /node_modules
-src/controllers/actors.controller.js
