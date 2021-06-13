@@ -10,7 +10,7 @@ const seasonSchema = new Schema([
 
 const showSchema = new Schema({
     name:               String,
-    actors:             [{ref: 'Actor', type: Schema.Types.ObjectId}],
+    actors:             [{ref: 'Actor', type: Schema.Types.ObjectId, required: true}],
     imgURL:             String,
     rating:             Number,
     year:               Number,

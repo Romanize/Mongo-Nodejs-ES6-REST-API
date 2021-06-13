@@ -4,7 +4,7 @@ import Director from "../models/Director.js"
 
 //Get All movies
 export const getMovies = async (req,res) =>{
-    const movies = await Movie.find().populate('Director','name')
+    const movies = await Movie.find().populate('actors','name')
 
     res.json(movies)
 }
@@ -17,7 +17,7 @@ export const getMoviesByQuery = async (req,res) =>{
     res.json('query Sent')    
 }
 
-//Filter movies by Actor
+//Remove movie from db
 export const removeMovie = async (req,res) =>{
     try {
         const id = req.params.id
@@ -26,6 +26,8 @@ export const removeMovie = async (req,res) =>{
         console.log(movieRemoved)
 
         if(!movieRemoved) return res.status(400).json({"message":"A movie with this ID was not found"})
+
+        await Actor.updateMany({"_id": movieRemoved.actors},{ $pull: {movies: movieRemoved._id}})
 
         res.json({"message": "Movie removed from Database"})
     } catch (error) {
@@ -64,7 +66,7 @@ export const setNewMovie = async (req,res) =>{
         console.log(movieSaved)
     
         await Actor.updateMany({"_id": movieSaved.actors},{ $push: {movies: movieSaved._id}})
-        await Director.updateMany({"_id": movieSaved.director},{ $push: {movies: movieSaved._id}})
+        // await Director.updateMany({"_id": movieSaved.director},{ $push: {movies: movieSaved._id}})
     
         res.status(201).json({"message": "Movie has been added to Database"})
     } catch (error) {
