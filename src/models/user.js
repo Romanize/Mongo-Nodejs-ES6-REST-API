@@ -14,8 +14,6 @@ const userSchema = new Schema ({
         type: String,
         required: true
     }
-},{
-    timestamps: true
 })
 
 userSchema.statics.encryptPassword = async ( password ) => {

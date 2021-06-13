@@ -1,22 +1,23 @@
 import { Schema, model } from "mongoose";
 
-const tvShowSchema = new Schema({
-    name: String,
-    director: {ref: 'Director', type: Schema.Types.ObjectId},
-    actors: [{ref: 'Actor', type: Schema.Types.ObjectId}],
-    imgURL: String,
-    rating: Number,
-    seasons: [
-        [
-            {
-                name: String,
-                rating: Number
-            }
-        ]
-    ]
+const seasonSchema = new Schema([
+    [{
+        name:           String,
+        rating:         Number,
+        director:       {ref: 'Director', type: Schema.Types.ObjectId},
+    }]
+])
+
+const showSchema = new Schema({
+    name:               String,
+    actors:             [{ref: 'Actor', type: Schema.Types.ObjectId}],
+    imgURL:             String,
+    rating:             Number,
+    year:               Number,
+    seasons:            seasonSchema
 },{
     timestamps: true,
     versionKey: false
 })
 
-export default model('TvShow',tvShowSchema)
+export default model('Show', showSchema)

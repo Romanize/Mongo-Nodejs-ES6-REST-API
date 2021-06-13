@@ -1,0 +1,232 @@
+#%RAML 1.0
+---
+title: fakeIMDB API
+baseUri: http://localhost:3000
+version: v1
+
+/movies:
+    get:
+        description: Retrieve movies
+        queryParameters:
+            director:
+                displayName: Director
+                type: string
+                description: This movie director full name
+                example: Quentin Tarantino
+                required: false
+            year:
+                displayName: Year
+                type: number
+                description: The year this movie was released
+                example: 2013
+                required: false
+            rating:
+                displayName: Rating
+                type: number
+                description: Avg rating (1-10) submitted by users
+                example: 7.6
+                required: false
+            actor:
+                displayName: Actor
+                type: string
+                description: An actor full name
+                example: Bradd Pitt
+                required: false
+            name:
+                displayName: name
+                type: string
+                description: This movie name
+                example: Inglorious Bastards
+                required: false
+    post:
+        queryParameters:
+            access_token:
+                displayName: Access Token
+                type: string
+                description: Token giving you permission to manage database
+                required: true
+    /{id}:
+        get:
+        put:
+            queryParameters:
+                access_token:
+                    displayName: Access Token
+                    type: string
+                    description: Token giving you permission to manage database
+                    required: true
+        delete:
+            queryParameters:
+                access_token:
+                    displayName: Access Token
+                    type: string
+                    description: Token giving you permission to manage database
+                    required: true
+/shows:
+    get:
+        queryParameters:
+            director:
+                displayName: Director
+                type: string
+                description: This show director full name
+                example: Chuck Lorre
+                required: false
+            year:
+                displayName: Year
+                type: number
+                description: The year this show was released
+                example: 2006
+                required: false
+            rating:
+                displayName: Rating
+                type: number
+                description: Avg rating (1-10) submitted by users
+                example: 8.2
+                required: false
+            actor:
+                displayName: Actor
+                type: string
+                description: An actor full name
+                example: Jim Parsons
+                required: false
+            name:
+                displayName: name
+                type: string
+                description: This show name
+                example: Big bang Theory
+                required: false
+    post:
+        queryParameters:
+            access_token:
+                displayName: Access Token
+                type: string
+                description: Token giving you permission to manage database
+                required: true
+    /{id}:
+        get:
+        put:
+            queryParameters:
+                access_token:
+                    displayName: Access Token
+                    type: string
+                    description: Token giving you permission to manage database
+                    required: true
+        delete:
+            queryParameters:
+                access_token:
+                    displayName: Access Token
+                    type: string
+                    description: Token giving you permission to manage database
+                    required: true
+        /{season}:
+            get:
+            put:
+                queryParameters:
+                    access_token:
+                        displayName: Access Token
+                        type: string
+                        description: Token giving you permission to manage database
+                        required: true
+            post:
+                queryParameters:
+                    access_token:
+                        displayName: Access Token
+                        type: string
+                        description: Token giving you permission to manage database
+                        required: true
+            delete:
+                queryParameters:
+                    access_token:
+                        displayName: Access Token
+                        type: string
+                        description: Token giving you permission to manage database
+                        required: true
+            /{chapter}:
+                get:
+/actors:
+    get:
+        queryParameters:
+            oscars:
+                displayName: Oscars
+                type: number
+                description: Numbers of oscars won to date
+                example: 4
+                required: false
+            movie:
+                displayName: Movie
+                type: string
+                description: Name of a movie
+                example: Insidious
+                required: false
+            show:
+                displayName: Show
+                type: string
+                description: Name of a tv show
+                example: Friends
+                required: false
+    post:
+        queryParameters:
+            access_token:
+                displayName: Access Token
+                type: string
+                description: Token giving you permission to manage database
+                required: true
+    /{id}:
+        get:
+        put:
+            queryParameters:
+                access_token:
+                    displayName: Access Token
+                    type: string
+                    description: Token giving you permission to manage database
+                    required: true
+        delete:
+            queryParameters:
+                access_token:
+                    displayName: Access Token
+                    type: string
+                    description: Token giving you permission to manage database
+                    required: true
+/director:
+    get:
+        queryParameters:
+            oscars:
+                displayName: Oscars
+                type: number
+                description: Numbers of oscars won to date
+                example: 2
+                required: false
+            movie:
+                displayName: Movie
+                type: string
+                description: Name of a movie
+                example: Bad boys 2
+                required: false
+            show:
+                displayName: Show
+                type: string
+                description: Name of a tv show
+                example: Supernatural
+                required: false
+    post:
+        queryParameters:
+            access_token:
+                displayName: Access Token
+                type: string
+                description: Token giving you permission to manage database
+                required: true
+    /{id}:
+        get:
+        put:
+            queryParameters:
+                access_token:
+                    displayName: Access Token
+                    type: string
+                    description: Token giving you permission to manage database
+                    required: true
+        delete:
+            queryParameters:
+                access_token:
+                    displayName: Access Token
+                    type: string
+                    description: Token giving you permission to manage database
+                    required: true
