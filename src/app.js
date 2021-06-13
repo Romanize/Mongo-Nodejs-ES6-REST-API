@@ -2,6 +2,7 @@ import express from 'express'
 import morgan from 'morgan'
 import moviesRoutes from './routes/movies.routes'
 import actorsRoutes from './routes/actors.routes'
+import directorsRoutes from './routes/directors.routes'
 import authRoutes from './routes/auth.routes'
 
 //-------------------------------SETTINGS-------------------------------//
@@ -15,7 +16,7 @@ app.use(express.json())
 app.use( '/', authRoutes )
 app.use( '/movies', moviesRoutes )
 app.use( '/actors', actorsRoutes )
-// app.use( '/director', moviesRoutes )
+app.use( '/directors', directorsRoutes )
 
 
 export default app

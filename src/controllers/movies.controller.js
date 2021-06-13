@@ -1,6 +1,6 @@
-import Movie from "../models/Movie.js"
-import Actor from "../models/Actor.js"
-import Director from "../models/Director.js"
+import Movie from "../models/movie.js"
+import Actor from "../models/actor.js"
+import Director from "../models/director.js"
 
 //Get All movies
 export const getMovies = async ( req , res ) =>{

@@ -1,21 +1,30 @@
-import Movie from "../models/Movie.js"
-import Actor from "../models/Actor.js"
-import Director from "../models/Director.js"
+import Movie from "../models/movie.js"
+import Actor from "../models/actor.js"
+import Show from "../models/shows.js"
 
-//Get All actors
+//Get all actors data
 export const getActors = async (req,res) =>{
-    const actors = await Actor.find().populate('movies','name')
+    const actors = await Actor.find()
+                                .populate('movies','name')
+                                .populate('shows', 'name')
 
     res.json(actors)
 }
 
+//Create new Actor on DB
 export const setNewActor = async (req,res) =>{
     try {
         const {name, gender, nationality, age, imgURL, oscars, movies, shows} = req.body
 
-        const isValidMovieId = movies.map(id => id.match(/^[0-9a-fA-F]{24}$/));
-
-        if(isValidMovieId.includes(null)) return res.status(400).json({"message": "Invalid Actor"})
+        //Validate movies and shows ID
+        movies.forEach(id => {
+            const isMovieFound = Movie.findById(id)
+            if(!isMovieFound) return res.status(400).json({"message": `The movie with ${id} is invalid`})
+        });
+        shows.forEach(id => {
+            const isShowFound = Show.findById(id)
+            if(!isMovieFound) return res.status(400).json({"message": `The show with ${id} is invalid`})
+        });
 
         const newActor = new Actor({
             name, 
@@ -28,11 +37,11 @@ export const setNewActor = async (req,res) =>{
             movies
         })
     
-        const actorSaved = await newActor.save()
-        console.log(actorSaved)
+        const actorSaved = await new Actor.save()
     
+        //Update Movies and Show actors field with this Actor ID
         await Movie.updateMany({"_id": actorSaved.movies},{ $push: {actors: actorSaved._id}})
-        // await Director.updateMany({"_id": movieSaved.director},{ $push: {movies: movieSaved._id}})
+        await Show.updateMany({"_id": actorSaved.shows},{ $push: {actors: actorSaved._id}})
     
         res.status(201).json({"message": "Actor has been added to Database"})
     } catch (error) {
@@ -41,15 +50,18 @@ export const setNewActor = async (req,res) =>{
     }
 }
 
-//Remove actor from db -- TODO
+//Remove actor from db
 export const removeActor = async (req,res) =>{
     try {
         const id = req.params.id
 
         const actorRemoved = await Actor.findByIdAndDelete(id)
-        console.log(actorRemoved)
 
-        if(!actorRemoved) return res.status(400).json({"message":"An actor with this ID was not found"})
+        if(!actorRemoved) return res.status(400).json({"message":`An actor with ID ${id} was not found`})
+
+        //Remove this actor from movies and shows fields
+        await Movie.updateMany({"_id": actorSaved.movies},{ $pull: {actors: actorSaved._id}})
+        await Show.updateMany({"_id": actorSaved.shows},{ $pull: {actors: actorSaved._id}})
 
         res.json({"message": "Actor removed from Database"})
     } catch (error) {
