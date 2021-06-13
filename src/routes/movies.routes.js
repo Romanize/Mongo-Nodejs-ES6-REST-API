@@ -8,7 +8,7 @@ const router = Router()
 router.get('/', moviesController.getMovies)
 
 //Filter movies by Actor and/or Director
-// router.get('/search', moviesController.getMoviesByQuery)
+router.get('/search', moviesController.getMoviesByQuery)
 
 //Add Movie to Database
 router.post('/', verifyToken, moviesController.setNewMovie)

@@ -3,13 +3,13 @@ import Actor from "../models/Actor.js"
 import Director from "../models/Director.js"
 
 //Get All actors
-export const getActors = async (req,res) =>{
-    const actors = await Actor.find().populate('movies','name')
+export const getDirectors = async (req,res) =>{
+    const directors = await Actor.find().populate('movies','name')
 
-    res.json(actors)
+    res.json(directors)
 }
 
-export const setNewActor = async (req,res) =>{
+export const setNewDirector = async (req,res) =>{
     try {
         const {name, gender, nationality, age, imgURL, oscars, movies, shows} = req.body
 
