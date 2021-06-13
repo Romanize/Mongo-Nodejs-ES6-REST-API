@@ -1,5 +1,6 @@
 import {Router} from 'express'
 import * as moviesController from '../controllers/movies.controller'
+import { verifyToken } from "../middlewares/auth.jwt"
 
 const router = Router()
 
@@ -7,18 +8,18 @@ const router = Router()
 router.get('/', moviesController.getMovies)
 
 //Filter movies by Actor and/or Director
-router.get('/search', moviesController.getMoviesByQuery)
+// router.get('/search', moviesController.getMoviesByQuery)
 
 //Add Movie to Database
-router.post('/', moviesController.setNewMovie)
+router.post('/', verifyToken, moviesController.setNewMovie)
 
 //Remove Movie from Database
-router.delete('/:id', moviesController.removeMovie)
+router.delete('/:id', verifyToken, moviesController.removeMovie)
 
 //Get just one Movie from Database
 router.get('/:id', moviesController.getSingleMovie)
 
 //Update Movie Data
-router.put('/:id', moviesController.updateMovie)
+// router.put('/:id', verifyToken, moviesController.updateMovie)
 
 export default router

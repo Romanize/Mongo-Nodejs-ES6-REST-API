@@ -3,4 +3,4 @@ import './database'
 
 app.listen(3000)
 
-console.log('Server has been restarted')
+console.log('Server is up!')
