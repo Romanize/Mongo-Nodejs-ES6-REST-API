@@ -5,15 +5,12 @@ import { verifyToken } from '../middlewares/auth.jwt'
 const router = Router()
 
 //Get single season
-router.get('/:seasonNumber', seasonsController.getSingleSeason)
+router.get('/:show/:seasonNumber', seasonsController.getSingleSeason)
 
 //Get single chapter
-router.get('/:chapterNumber', seasonsController.getSingleSeason)
+router.get('/:show/:seasonNumber/:episodeNumber', seasonsController.getSingleChapter)
 
 //Add Season to Database
-router.post('/', verifyToken, seasonsController.setNewSeason)
-
-//Remove Season from Database
-router.delete('/:id', verifyToken, seasonsController.removeSeason)
+router.post('/:show', verifyToken, seasonsController.setNewSeason)
 
 export default router

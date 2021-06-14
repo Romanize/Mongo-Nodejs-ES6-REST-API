@@ -1,6 +1,7 @@
 import Movie from "../models/movie.js"
 import Actor from "../models/actor.js"
 import Show from "../models/show.js"
+import { getErrors } from "../database.js"
 
 //Get all actors data
 export const getActors = async (req,res) =>{
@@ -16,6 +17,20 @@ export const setNewActor = async (req,res) =>{
     try {
         const {name, gender, nationality, age, imgURL, oscars, movies, shows} = req.body
 
+        if(movies.constructor === Array ){
+            movies.forEach(async id => {
+                const isMovieFound = await Movie.findById(id)
+                if(!isMovieFound) return res.status(400).json({"message": `Movie with ID ${id} doesn't exist`})
+            })
+        }
+
+        if(shows.constructor === Array ){
+            shows.forEach(async id => {
+                const isShowFound = await Show.findById(id)
+                if(!isShowFound) return res.status(400).json({message: `Show with ID ${id} doesn't exist`})
+            })
+        }
+
         const newActor = new Actor({
             name, 
             gender, 
@@ -27,9 +42,7 @@ export const setNewActor = async (req,res) =>{
             movies
         })
     
-        newActor.save((error, document)=>{
-            console.log(error)
-        })
+        const actorSaved = await newActor.save()
     
         //Update Movies and Show actors field with this Actor ID
         await Movie.updateMany({"_id": actorSaved.movies},{ $push: {actors: actorSaved._id}})
@@ -37,27 +50,7 @@ export const setNewActor = async (req,res) =>{
     
         res.status(201).json({"message": "Actor has been added to Database"})
     } catch (error) {
-        console.log(error.message)
-        res.status(500).json({"message": "Internal server error, please try again later"})
-    }
-}
-
-//Remove actor from db
-export const removeActor = async (req,res) =>{
-    try {
-        const id = req.params.id
-
-        const actorRemoved = await Actor.findByIdAndDelete(id)
-
-        if(!actorRemoved) return res.status(400).json({"message":`An actor with ID ${id} was not found`})
-
-        //Remove this actor from movies and shows fields
-        await Movie.updateMany({"_id": actorRemoved.movies},{ $pull: {actors: actorRemoved._id}})
-        await Show.updateMany({"_id": actorRemoved.shows},{ $pull: {actors: actorRemoved._id}})
-
-        res.json({"message": "Actor removed from Database"})
-    } catch (error) {
-        res.status(500).json({"message":"Internal server error"})
+        res.status(400).json({"message": error.message})
     }
 }
 

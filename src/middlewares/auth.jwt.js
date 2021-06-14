@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
 import config from '../config'
 
+//Verify access token expiration
 export const verifyToken = async (req, res, next) => {
     try {
         const token = req.headers["authorization"]
@@ -9,7 +10,7 @@ export const verifyToken = async (req, res, next) => {
     
         const verified = jwt.verify(token,config.SECRET_ACCESS)
         
-        req.uid = verified.id
+        req.uid = verified.id //In case we need to use id on next function
 
         next()
     } catch (error) {

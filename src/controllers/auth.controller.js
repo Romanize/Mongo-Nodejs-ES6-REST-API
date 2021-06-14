@@ -3,43 +3,15 @@ import Token from '../models/token'
 import jwt from 'jsonwebtoken'
 import config from '../config'
 
-//Save a new user and send token to front
-export const registerUser = async ( req , res ) =>{
-    try {
-        const { username , email , password } = req.body;
-
-        const usernameFound = await User.findOne({username})
-        if(usernameFound) return res.status(403).json({"message": "Username has been taken"})
-
-        const emailFound = await User.findOne({email})
-        if(emailFound) return res.status(403).json({"message": "email has been taken"})
-        
-        const newUser = new User({
-            username,
-            email,
-            password: await User.encryptPassword(password)
-        })
-        
-        const savedUser = await newUser.save()
-
-        const accessToken = generateAccessToken(userFound)
-        const refreshToken = jwt.sign({_id: userFound._id}, config.SECRET_REFRESH)
-        
-        res.json({"accessToken": accessToken, "refreshToken": refreshToken})
-    } catch (error) {
-        console.error(error.message)
-        res.status(500).json({"message": "Server error"})
-    }
-}
-
-//Validate login informatio and (if correct) send token to frontend
+//Validate login information and (if correct) send token to frontend
 export const loginUser = async ( req , res ) => {
 
     try {
         const { email, password } = req.body
+
         const userFound = await User.findOne({email})
     
-        if(!userFound) return res.status(404).json({"message": "User not found"})
+        if(!userFound) return res.status(400).json({"message": "User not found"})
     
         const isPasswordOk = await User.comparePassword(password, userFound.password)
     
@@ -54,7 +26,6 @@ export const loginUser = async ( req , res ) => {
         })
 
         const saved = await tokenLog.save()
-        console.log( saved ) //delete
     
         res.json({"accessToken": accessToken, "refreshToken": refreshToken})
     } catch (error) {
@@ -94,7 +65,7 @@ export const logoutUser = async ( req , res ) =>{
 
         const userFound = await Token.findOneAndDelete({refreshToken, userId: user._id})
 
-        if(!userFound) return res.status(400).json({"message": "You already disconnected"})
+        if(!userFound) return res.status(400).json({"message": "You already disconnected"}) //Token not found on DB
 
         res.json({"message": "You have logged out"})
     } catch (error) {

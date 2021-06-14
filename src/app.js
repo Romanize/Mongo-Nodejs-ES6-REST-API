@@ -20,7 +20,7 @@ app.use( '/movies' , moviesRoutes )
 app.use( '/actors' , actorsRoutes )
 app.use( '/directors' , directorsRoutes )
 app.use( '/shows' , showsRoutes )
-app.use( '/shows/:showID' , seasonsRoutes )
+app.use( '/shows' , seasonsRoutes )
 
 
 export default app

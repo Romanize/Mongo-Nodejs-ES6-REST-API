@@ -13,7 +13,4 @@ router.post("/",verifyToken,actorController.setNewActor)
 //Get single actor reference
 router.get("/:id",actorController.getSingleActor)
 
-//Remove actor from DB
-router.delete("/:id",verifyToken,actorController.removeActor)
-
 export default router

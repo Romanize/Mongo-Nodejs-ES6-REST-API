@@ -7,13 +7,7 @@ const router = Router()
 //Get all directors
 router.get("/",directorController.getDirectors)
 
-//Add director to DB
-router.post("/",verifyToken,directorController.setNewDirector)
-
 //Get single director reference
 router.get("/:id",directorController.getSingleDirector)
-
-//Remove director from DB
-router.delete("/:id",verifyToken,directorController.removeDirector)
 
 export default router
