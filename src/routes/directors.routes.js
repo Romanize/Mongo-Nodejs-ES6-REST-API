@@ -4,10 +4,16 @@ import { verifyToken } from "../middlewares/auth.jwt"
 
 const router = Router()
 
+//Get all directors
 router.get("/",directorController.getDirectors)
+
+//Add director to DB
 router.post("/",verifyToken,directorController.setNewDirector)
-// router.get("/search",auth.registerUser)
-// router.get("/:id",auth.loginUser)
+
+//Get single director reference
+router.get("/:id",directorController.getSingleDirector)
+
+//Remove director from DB
 router.delete("/:id",verifyToken,directorController.removeDirector)
 
 export default router

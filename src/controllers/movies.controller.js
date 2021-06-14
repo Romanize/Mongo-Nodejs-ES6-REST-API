@@ -1,6 +1,7 @@
 import Movie from "../models/movie.js"
 import Actor from "../models/actor.js"
 import Director from "../models/director.js"
+import { isValidObjectId } from "mongoose"
 
 //Get All movies
 export const getMovies = async ( req , res ) =>{
@@ -92,15 +93,22 @@ export const setNewMovie = async (req,res) =>{
     try {
         const {name, director, actors, rating, imgURL, year} = req.body
 
+        if(!actors.constructor === Array) return res.json({"message": "Invalid actors data"})
+
+        console.log(actors.length)
+            
         //Validate ID's reference
-        actors.forEach(id => {
-            const actor = Actor.findById(id)
+        actors.forEach(async id => {
+            const actor = await Actor.findById(id)
 
             if(!actor) return res.json({"message":`Invalid actor ID ${id}, you need to add this actor first`})
         });
 
-        const isDirectorFound = Director.findById(director)
-        if(!isDirectorFound) return res.json({"message":`Invalid director ID ${id}, you need to add this director first`})
+        if(!isValidObjectId(director)) return res.json({"message": "Invalid director data"})
+
+        const isDirectorFound = await Director.findById(director)
+
+        if(!isDirectorFound) return res.json({"message":`Invalid director ID ${director}, you need to add this director first`})
 
         //Create movie on DB
         const newMovie = new Movie({
@@ -118,7 +126,7 @@ export const setNewMovie = async (req,res) =>{
         await Actor.updateMany({"_id": movieSaved.actors},{ $push: {movies: movieSaved._id}})
         await Director.updateMany({"_id": movieSaved.director},{ $push: {movies: movieSaved._id}})
     
-        res.status(201).json({"message": "Movie has been added to Database"})
+        res.status(201).json({"message": "Movie has been added to Database", movieSaved})
     } catch (error) {
         console.log(error.message)
         res.status(500).json({"message": "Internal server error, please try again later"})

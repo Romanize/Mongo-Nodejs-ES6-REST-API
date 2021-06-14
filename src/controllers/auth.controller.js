@@ -22,9 +22,10 @@ export const registerUser = async ( req , res ) =>{
         
         const savedUser = await newUser.save()
 
-        const token = jwt.sign({id: savedUser._id}, config.SECRET_ACCESS, {expiresIn: 1000})
+        const accessToken = generateAccessToken(userFound)
+        const refreshToken = jwt.sign({_id: userFound._id}, config.SECRET_REFRESH)
         
-        res.json({ "token" : token })
+        res.json({"accessToken": accessToken, "refreshToken": refreshToken})
     } catch (error) {
         console.error(error.message)
         res.status(500).json({"message": "Server error"})
@@ -82,7 +83,7 @@ export const refreshToken = async ( req , res ) =>{
 }
 
 function generateAccessToken (user) {
-    return jwt.sign({id: user._id}, config.SECRET_ACCESS, {expiresIn: 15})
+    return jwt.sign({id: user._id}, config.SECRET_ACCESS, {expiresIn: 1200})
 }
 
 export const logoutUser = async ( req , res ) =>{
@@ -92,7 +93,6 @@ export const logoutUser = async ( req , res ) =>{
         const user = jwt.verify(refreshToken, config.SECRET_REFRESH)
 
         const userFound = await Token.findOneAndDelete({refreshToken, userId: user._id})
-        console.log(userFound)
 
         if(!userFound) return res.status(400).json({"message": "You already disconnected"})
 

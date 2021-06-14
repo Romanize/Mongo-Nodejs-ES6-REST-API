@@ -19,7 +19,4 @@ router.delete('/:id', verifyToken, moviesController.removeMovie)
 //Get just one Movie from Database
 router.get('/:id', moviesController.getSingleMovie)
 
-//Update Movie Data
-// router.put('/:id', verifyToken, moviesController.updateMovie)
-
 export default router
