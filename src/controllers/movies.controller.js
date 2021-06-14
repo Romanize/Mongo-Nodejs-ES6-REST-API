@@ -56,25 +56,6 @@ export const getMoviesByQuery = async ( req , res ) =>{
     }
 }
 
-//Remove movie from db
-export const removeMovie = async (req,res) =>{
-    try {
-        const id = req.params.id
-
-        const movieRemoved = await Movie.findByIdAndDelete(id)
-
-        //Validate movie ID before server response
-        if(!movieRemoved) return res.status(400).json({"message":"A movie with this ID was not found"})
-
-        //Remove this movie from any actor and director list
-        await Actor.updateMany({"_id": movieRemoved.actors},{ $pull: {movies: movieRemoved._id}})
-        await Director.updateMany({"_id": movieRemoved.director},{ $pull: {movies: movieRemoved._id}})
-
-        res.json({"message": "Movie removed from Database"})
-    } catch (error) {
-        res.status(500).json({"message":"Internal server error"})
-    }
-}
 
 //Get only the movie matching url id
 export const getSingleMovie = async (req,res) =>{
@@ -86,49 +67,4 @@ export const getSingleMovie = async (req,res) =>{
     if(!movie) return res.status(400).json({"message":"A movie with this ID was not found"})
 
     res.json(movie)
-}
-
-//Add Movie to Database
-export const setNewMovie = async (req,res) =>{
-    try {
-        const {name, director, actors, rating, imgURL, year} = req.body
-
-        if(!actors.constructor === Array) return res.json({"message": "Invalid actors data"})
-
-        console.log(actors.length)
-            
-        //Validate ID's reference
-        actors.forEach(async id => {
-            const actor = await Actor.findById(id)
-
-            if(!actor) return res.json({"message":`Invalid actor ID ${id}, you need to add this actor first`})
-        });
-
-        if(!isValidObjectId(director)) return res.json({"message": "Invalid director data"})
-
-        const isDirectorFound = await Director.findById(director)
-
-        if(!isDirectorFound) return res.json({"message":`Invalid director ID ${director}, you need to add this director first`})
-
-        //Create movie on DB
-        const newMovie = new Movie({
-            name, 
-            director, 
-            actors, 
-            rating, 
-            year, 
-            imgURL
-        })
-    
-        const movieSaved = await newMovie.save()
-    
-        //Add movie to actors and director fields
-        await Actor.updateMany({"_id": movieSaved.actors},{ $push: {movies: movieSaved._id}})
-        await Director.updateMany({"_id": movieSaved.director},{ $push: {movies: movieSaved._id}})
-    
-        res.status(201).json({"message": "Movie has been added to Database", movieSaved})
-    } catch (error) {
-        console.log(error.message)
-        res.status(500).json({"message": "Internal server error, please try again later"})
-    }
 }

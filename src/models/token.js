@@ -1,8 +1,8 @@
 import { Schema , model } from 'mongoose'
 
 const tokenSchema = new Schema ({
-    userId:             {type:String,required: true},
-    refreshToken:       {type:String,required: true}
+    userId:             { type:Schema.Types.ObjectId, required: [true, 'User ID missing']},
+    refreshToken:       { type:String, required: [true, 'Token missing']}
 },{
     timestamps: true
 })

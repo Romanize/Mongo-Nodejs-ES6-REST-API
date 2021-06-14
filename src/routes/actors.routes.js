@@ -10,8 +10,6 @@ router.get("/",actorController.getActors)
 //Set new Actor
 router.post("/",verifyToken,actorController.setNewActor)
 
-// router.get("/search",auth.registerUser)
-
 //Get single actor reference
 router.get("/:id",actorController.getSingleActor)
 

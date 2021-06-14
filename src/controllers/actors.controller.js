@@ -16,16 +16,6 @@ export const setNewActor = async (req,res) =>{
     try {
         const {name, gender, nationality, age, imgURL, oscars, movies, shows} = req.body
 
-        //Validate movies and shows ID
-        movies.forEach(id => {
-            const isMovieFound = Movie.findById(id)
-            if(!isMovieFound) return res.status(400).json({"message": `The movie with ${id} is invalid`})
-        });
-        shows.forEach(id => {
-            const isShowFound = Show.findById(id)
-            if(!isMovieFound) return res.status(400).json({"message": `The show with ${id} is invalid`})
-        });
-
         const newActor = new Actor({
             name, 
             gender, 
@@ -37,7 +27,9 @@ export const setNewActor = async (req,res) =>{
             movies
         })
     
-        const actorSaved = await new Actor.save()
+        newActor.save((error, document)=>{
+            console.log(error)
+        })
     
         //Update Movies and Show actors field with this Actor ID
         await Movie.updateMany({"_id": actorSaved.movies},{ $push: {actors: actorSaved._id}})
@@ -60,8 +52,8 @@ export const removeActor = async (req,res) =>{
         if(!actorRemoved) return res.status(400).json({"message":`An actor with ID ${id} was not found`})
 
         //Remove this actor from movies and shows fields
-        await Movie.updateMany({"_id": actorSaved.movies},{ $pull: {actors: actorSaved._id}})
-        await Show.updateMany({"_id": actorSaved.shows},{ $pull: {actors: actorSaved._id}})
+        await Movie.updateMany({"_id": actorRemoved.movies},{ $pull: {actors: actorRemoved._id}})
+        await Show.updateMany({"_id": actorRemoved.shows},{ $pull: {actors: actorRemoved._id}})
 
         res.json({"message": "Actor removed from Database"})
     } catch (error) {

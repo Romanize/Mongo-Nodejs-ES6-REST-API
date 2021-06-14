@@ -10,12 +10,6 @@ router.get('/', moviesController.getMovies)
 //Filter movies by Actor and/or Director
 router.get('/search', moviesController.getMoviesByQuery)
 
-//Add Movie to Database
-router.post('/', verifyToken, moviesController.setNewMovie)
-
-//Remove Movie from Database
-router.delete('/:id', verifyToken, moviesController.removeMovie)
-
 //Get just one Movie from Database
 router.get('/:id', moviesController.getSingleMovie)
 
