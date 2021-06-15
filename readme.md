@@ -30,4 +30,8 @@ Used babel as an ES6 to ES5 Transpiller, to keep a cleaner structure mostly with
 
 Postman document is provided, with information of all endpoints and some pre-data you can use to test this app.
 
+For get request, no authorization is required, for posting, you will need to provide Access token in 'Authorization' header. You can get this token with login endpoint and data provided on postman document.
+
+If your token expires, use refresh token provided in login to refresh access token.
+
 Thank you for reading, and I hope you like my work ;).
