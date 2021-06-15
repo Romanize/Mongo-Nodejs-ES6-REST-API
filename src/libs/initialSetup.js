@@ -9,7 +9,7 @@ import Show from '../models/show'
 import Season from '../models/season'
 import User from '../models/user'
 
-const userData = [
+const usersData = [
     {
         username:           'Batman',
         email:              "test@gmail.com",
@@ -193,7 +193,12 @@ async function setDatabase() {
 
     await myDB.dropDatabase()
     
-    await User.create(userData)
+    usersData.forEach(async user => {
+        user.password = await User.encryptPassword(user.password)
+        console.log(user)
+        await User.create(user)
+    })
+    
     await Actor.create(actorsData)
     await Director.create(directorsData)
 

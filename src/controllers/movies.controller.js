@@ -33,13 +33,17 @@ export const getMoviesByQuery = async ( req , res ) =>{
 
                 const sortBy = query.sort
                 const order = query.order
+                query.name = new RegExp(`${query.name}`, "i")
 
                 //remove not filterable parameters
                 delete query["sort"]
                 delete query["order"]
+                console.log(query)
                 
                 //Look for movies and sort based on query
-                const movies = await Movie.find(query).sort([[sortBy, order]])
+                const movies = await Movie.find(query)
+                                        .sort([[sortBy, order]])
+                                        .populate('director actors','name')
                 return res.json(movies)
             }
         }

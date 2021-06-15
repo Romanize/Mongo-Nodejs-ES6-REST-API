@@ -52,7 +52,7 @@ export const setNewSeason = async (req,res) =>{
         console.log(seasonSaved)
     
         //Add season to show seasons field
-        await Show.updateOne({"_id": seasonSaved.show},{ $push: {seasons: seasonSaved._id}})
+        await Show.updateOne({"_id": seasonSaved.show},{ $addToSet: {seasons: seasonSaved._id}})
     
         res.status(201).json({"message": "Season has been added to Database"})
     } catch (error) {

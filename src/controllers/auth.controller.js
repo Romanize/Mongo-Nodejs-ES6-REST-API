@@ -65,7 +65,7 @@ export const logoutUser = async ( req , res ) =>{
 
         const userFound = await Token.findOneAndDelete({refreshToken, userId: user._id})
 
-        if(!userFound) return res.status(400).json({"message": "You already disconnected"}) //Token not found on DB
+        if(!userFound) return res.status(400).json({"message": "Error on logout request, verify token"}) //Token not found on DB
 
         res.json({"message": "You have logged out"})
     } catch (error) {
