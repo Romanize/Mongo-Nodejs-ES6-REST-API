@@ -6,31 +6,481 @@
 	},
 	"item": [
 		{
-			"name": "getMovies",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:3000/movies",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"movies"
-					]
+			"name": "Auth",
+			"item": [
+				{
+					"name": "loginUser",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"test@gmail.com\",\r\n    \"password\" : \"123456\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refreshToken",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGM4YjM2OTU2OTExYTI3YWNmOGVhNDQiLCJpYXQiOjE2MjM3NjYxNzl9.QSozpee7IqPrrmyVp7oVma5lk7TArsUI9hoGd8gx2MQ\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/refreshToken",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"refreshToken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logoutUser",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\" : \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGM4YjM2OTU2OTExYTI3YWNmOGVhNDQiLCJpYXQiOjE2MjM3NjYxNzl9.QSozpee7IqPrrmyVp7oVma5lk7TArsUI9hoGd8gx2MQ\"\r\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/logout",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "setNewMovie",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": null
-			},
-			"response": []
+			"name": "Movies",
+			"item": [
+				{
+					"name": "getMovies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/movies",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSingleMovie",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/movies/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "60c8b36b56911a27acf8ea4a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getMoviesByQuery",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/movies/search?name=Pira&sort=year&order=desc",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"search"
+							],
+							"query": [
+								{
+									"key": "actors",
+									"value": "60c59a99d591b224c8915626",
+									"description": "actor id (should get with a select element value)",
+									"disabled": true
+								},
+								{
+									"key": "director",
+									"value": "",
+									"description": "director id (should get with a select element value)",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "Pira",
+									"description": "movie name"
+								},
+								{
+									"key": "sort",
+									"value": "year",
+									"description": "year, name, rating"
+								},
+								{
+									"key": "order",
+									"value": "desc",
+									"description": "asc, desc"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shows",
+			"item": [
+				{
+					"name": "getShows",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/shows",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"shows"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSingleShow",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/shows/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"shows",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "60c78c0aa948851b74e5d398"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "setNewSeason",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYzU3MTlhYzZkYTQwMjZhY2Q3MWE1OSIsImlhdCI6MTYyMzY5NDgyMCwiZXhwIjoxNjIzNjk2MDIwfQ.Wisq2j-owcmkYcOhbXvZumOZNhRzi2RA5zmQI6_wTTk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"seasonNumber\":     4,\r\n    \"show\":             \"60c78c0aa948851b74e5d398\",\r\n    \"imgURL\":           \"https://m.media-amazon.com/images/M/MV5BMTQ2NDIzNjEzOV5BMl5BanBnXkFtZTcwOTU2ODg5NA@@._V1_.jpg\",\r\n    \"episodes\":[{\r\n        \"episodeNumber\":  6,\r\n        \"name\":         \"Battle of Bastards\",\r\n        \"rating\":        8.6,\r\n        \"director\":      \"60c75d037707d81090583b7f\",\r\n        \"airedAt\":       \"2011-03-10\"\r\n    },{\r\n        \"episodeNumber\":  2,\r\n        \"name\":         \"All hail the king\",\r\n        \"rating\":        7.4,\r\n        \"director\":      \"60c75d037707d81090583b7f\",\r\n        \"airedAt\":       \"2011-03-10\"\r\n    }]\r\n}"
+						},
+						"url": {
+							"raw": "localhost:3000/shows/:showId",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"shows",
+								":showId"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "showId",
+									"value": "60c78c0aa948851b74e5d398"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSingleEpisode",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/shows/:showId/:seasonNumber/:episodeNumber",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"shows",
+								":showId",
+								":seasonNumber",
+								":episodeNumber"
+							],
+							"variable": [
+								{
+									"key": "showId",
+									"value": "60c78c0aa948851b74e5d398"
+								},
+								{
+									"key": "seasonNumber",
+									"value": "4"
+								},
+								{
+									"key": "episodeNumber",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSingleSeason",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/shows/:showId/:seasonNumber",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"shows",
+								":showId",
+								":seasonNumber"
+							],
+							"variable": [
+								{
+									"key": "showId",
+									"value": "60c78c0aa948851b74e5d398"
+								},
+								{
+									"key": "seasonNumber",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Actors",
+			"item": [
+				{
+					"name": "setNewActor",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwYzU3MTlhYzZkYTQwMjZhY2Q3MWE1OSIsImlhdCI6MTYyMzY4NzA2OCwiZXhwIjoxNjIzNjg4MjY4fQ.ChSqZmwuEpLELbsk8Sq7_wBMUIWRgyIOUqqZzroOG9I",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Sophia Lillis\", \r\n    \"gender\": \"female\", \r\n    \"nationality\": \"American\", \r\n    \"age\": 19, \r\n    \"oscars\" : 0,\r\n    \"imgURL\" : \"https://m.media-amazon.com/images/M/MV5BYWZjYjA0MWItNmExYS00M2JmLTlhZjAtNjIyYWUzOGJlZDNlXkEyXkFqcGdeQXVyMTA1ODAyOTI1._V1_.jpg\",\r\n    \"movies\": [\"60c59c2a8008f10c981c8302\"],\r\n    \"shows\": []\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/actors",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getActors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/actors",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSingleActor",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/actors/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"actors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "60c782578fde272d6c99431c"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Directors",
+			"item": [
+				{
+					"name": "getDirectors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/directors",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"directors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSingleDirector",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/directors/:id",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"directors",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "60c75d037707d81090583b7f"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

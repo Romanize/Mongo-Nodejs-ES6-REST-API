@@ -10,7 +10,7 @@ Feel free to change port number inside src/index.js file if you are already usin
 
 Database is provided prior starting server, if you have MongoDB service locally installed. In this case, you can run ```npm run db``` for setting up database.
 
-The collections is named as 'fakeIMDB', be carefull to not overwrite your current collections.
+The collections is named as 'fakeIMDB23', be carefull to not overwrite your current collections.
 
 ## JWT Tokens
 
