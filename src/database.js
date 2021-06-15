@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 //Connecting to local db
-mongoose.connect("mongodb://localhost/fakeIMDB",{
+mongoose.connect("mongodb://localhost/fakeIMDB23",{
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true

@@ -1,5 +1,7 @@
 import express from 'express'
 import morgan from 'morgan'
+
+//Importing routes
 import moviesRoutes from './routes/movies.routes'
 import showsRoutes from './routes/shows.routes'
 import seasonsRoutes from './routes/seasons.routes'

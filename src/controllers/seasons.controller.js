@@ -18,7 +18,7 @@ export const getSingleChapter = async (req,res) =>{
     const {show, seasonNumber, episodeNumber} = req.params
 
     //TODO - FIND CHAPTER REFERENCE
-    const season = await Season.findOne({show, seasonNumber}).populate('episodes.director')
+    const season = await Season.findOne({show, seasonNumber}).populate('episodes.director', {movies:0, shows:0})
 
     const episode = season.episodes.find(ep => ep.episodeNumber == episodeNumber)
 
