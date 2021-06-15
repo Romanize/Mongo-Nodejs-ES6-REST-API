@@ -6,7 +6,8 @@
   "scripts": {
     "build": "babel src --out-dir build",
     "dev": "nodemon src/index.js --exec babel-node",
-    "start": "nodemon build/index.js"
+    "start": "nodemon build/index.js",
+    "db": "babel-node src/libs/initialSetup.js"
   },
   "author": "Robert Martinez",
   "license": "ISC",

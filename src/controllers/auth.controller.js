@@ -54,7 +54,7 @@ export const refreshToken = async ( req , res ) =>{
 }
 
 function generateAccessToken (user) {
-    return jwt.sign({id: user._id}, config.SECRET_ACCESS, {expiresIn: 1200})
+    return jwt.sign({id: user._id}, config.SECRET_ACCESS, {expiresIn: 100})
 }
 
 export const logoutUser = async ( req , res ) =>{
